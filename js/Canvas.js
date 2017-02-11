@@ -3,6 +3,10 @@ var printStart,printEnd;//全局变量 打印开始和结束定位
 
 function pre(){//打印准备
 
+
+var div = document.getElementById("canvas");  //清空canvas中原来的所有子元素节点
+while(div.hasChildNodes()) {  div.removeChild(div.firstChild); }  
+
 var buildingIndex=document.getElementById("bui").value;
 var floorIndex=document.getElementById("flo").value;
 
@@ -53,12 +57,16 @@ function printMap(Array,printStart,printEnd){//绘制地图(数组)（楼，层�
 	ctx.fillStyle="white";
 	ctx.fillRect(0,0,3000,3000);//画布填充白色
 
+
 for(var i=printStart;i<=printEnd;i++){
 print(Array[i][2],Array[i][5],Array[i][6],Array[i][7],Array[i][8],Array[i][3],Array[i][4]);
 }
 }
 
 function print(roomType,dx,dy,wd,ht,t1,t2){	//从数组绘制地图(房间类型,形状坐标,形状坐标,宽度,高度,文字1,文字2)
+	
+	
+	
 	
 	printRoom(roomType,dx,dy,wd,ht);//(房间类型,形状坐标,形状坐标,宽度,高度)
 	printText(t1,t2,dx,dy);//(文字1,文字2,形状坐标,形状坐标)
@@ -68,6 +76,7 @@ function printRoom(roomType,dx,dy,wd,ht)//绘制房间图(房间类型,形状坐
 {
 var c=document.getElementById("map");
 var ctx=c.getContext("2d");//获取对应的CanvasRenderingContext2D对象(画笔)
+ctx.scale(sc,sc);
 
 switch(roomType)//颜色选择:roomType
 {
@@ -92,14 +101,17 @@ default: alert("一定是哪里搞错了!!");
 ctx.fillRect(dx,dy,wd,ht);//填充矩形
 ctx.strokeStyle="#5CACEE";
 ctx.strokeRect(dx,dy,wd,ht);//填充边框矩形
+ctx.scale(cs,cs);
 }
 
 function printText(t1,t2,dx,dy)//绘制文字(文字1,文字2,形状坐标,形状坐标)
 {
 var c=document.getElementById("map");
 var ctx=c.getContext("2d");//获取对应的CanvasRenderingContext2D对象(画笔)
+ctx.scale(sc,sc);
 
-ctx.font = "30px Arial";//设置字体样式
+
+ctx.font = "40px Arial";//设置字体样式
 ctx.fillStyle = "black";//设置字体填充颜色
 	if(t2=="0")
 	{
@@ -112,6 +124,8 @@ ctx.fillStyle = "black";//设置字体填充颜色
 	ctx.fillText(t1, dx+50,dy+40);//两个号码：从坐标点开始绘制文字1
 	ctx.fillText(t2, dx+50,dy+80);//从坐标点开始绘制文字2
 	}
+	
+	ctx.scale(cs,cs);
 }	
 
 function awRotate()//逆时针旋转
