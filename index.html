@@ -5,15 +5,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="js/jquery.mobile-1.4.5.min.css" />
-<script src="js/jquery-1.11.1.min.js"></script>
-<script src="js/jquery.mobile-1.4.5.min.js"></script>
+<script src="js/jquery-1.11.1.min.js" charset="UTF-8"></script>
+<script src="js/jquery.mobile-1.4.5.min.js" charset="UTF-8"></script>
 
 
 <script type="text/javaScript" charset="UTF-8" src="js/Arrays.js" ></script>
 <script type="text/javascript" charset="UTF-8" src="js/Canvas.js" ></script>
 <!-- <link rel="stylesheet" href="css/default.css"> -->
 <script type="text/javascript">
+
+var zoomrate=0;
+function zoomin(rate){
+	switch(rate){
+		case -1:
+			$("canvas").css("width","100%");
+			$("canvas").css("height","100%");
+			zoomrate+=1;
+			break;
+		case 0:
+			$("canvas").css("width","120%");
+			$("canvas").css("height","120%");
+			zoomrate+=1;
+			break;
+		case 1:
+			break;
+		default:
+			alert("怎么会这样???");	
+	}
+
+}
+
+
+function zoomout(rate){
+	switch(rate){
+		case -1:
+			break;
+		case 0:
+			$("canvas").css("width","80%");
+			$("canvas").css("height","80%");
+			zoomrate-=1;
+			break;
+		case 1:
+			$("canvas").css("width","100%");
+			$("canvas").css("height","100%");
+			zoomrate-=1;
+			break;
+		default:
+			alert("怎么会这样???");	
+	}
+
+}
+
 $(document).ready(function(){
+
  
     $("#building").bind("change",function(){ 
     if($(this).val()==0){
@@ -28,6 +72,7 @@ $(document).ready(function(){
 		//$(a).css("display","inline");
 		$(a).slideToggle("fast");
 		$("#bui").val($(this).val());
+
 	} 
 	}); 
 	
@@ -39,25 +84,31 @@ $(document).ready(function(){
 	});
 	
 	function changeHeight(){
-	var screen = $(window).height(),
-    header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header").outerHeight(),
-    footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight(),
-    contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height(),
-    content = screen - header - footer - contentCurrent;
-//	$(".ui-content").height(content);
+	var screen = $(window).height();
+//  header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header").outerHeight(),
+//  footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight(),
+    var header =$(".header").outerHeight() - 1;
+	var footer =$(".footer").outerHeight() - 1;
+//	var contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height();
+    var content = screen - header - footer ;//- contentCurrent;
+	$("#content").height(content);
+	console.log(screen,header,footer,content);
+
+/*
 var buildingMap = document.createElement("canvas"); 
-buildingMap.height=content-6;
+buildingMap.height= 406;
 buildingMap.width=$("#content").width();
 buildingMap.style="border:1px solid #c3c3c3;";
 buildingMap.id="map";
 document.getElementById("canvas").appendChild(buildingMap); 
-$( "#header" ).trigger( "updatelayout" );
+$( "#header" ).trigger( "updatelayout" );*/
+
 //$("#map").height(content-6);
 //$("#map").width($("#content").width());	
 	
 	}
 	
-	changeHeight();
+
 	
 	
 /*<!-- var n =document.createElement("div");
@@ -66,10 +117,20 @@ n.height=100;
 n.style="background-color:red";
 alert("aaa");
 document.getElementById("header").appendChild(n); */
+
 //$(".map").width($.mobile.getScreenWidth());
+
+
+
+
+
+
+
 });
+
 </script>
 <style type="text/css">
+
 p{
 font-size:12px;
 border-top-style:dotted;
@@ -78,6 +139,26 @@ border-width: 2px;
 border-color: white;
 text-align:center;
 }
+
+#canvas{
+width: 95%;
+height: 95%;
+border-style:dotted;
+margin:auto;
+overflow: auto;
+text-align:center;
+
+
+}
+
+canvas{
+margin:auto;
+
+}
+#content{
+height:400px;
+}
+
 </style>
 
 <noscript>Your browser does not support JavaScript!</noscript>
@@ -405,8 +486,6 @@ text-align:center;
 <li><a href="#p2" id="264">7105-松江校区7教楼1层105</a></li>
 <li><a href="#p2" id="265">7106-松江校区7教楼1层106</a></li>
 <li><a href="#p2" id="267">7107-松江校区7教楼1层107</a></li>
-					
-
 
 				</ul>
 		<a href="#p2" data-transition="slideup" class="ui-btn ui-corner-all">Explore Campus</a>
@@ -414,7 +493,7 @@ text-align:center;
 </div>
 
 
-<div data-role="page" id="p2">
+<div data-role="page" id="p2" data-ajax="false">
   <div data-role="header" class="header" id="header" data-position="fixed" >
 
 
@@ -552,13 +631,11 @@ text-align:center;
 
 
   <div data-role="content" id="content">
-	  <div class="canvas" id="canvas" >
-		<!--<canvas id="map" style="border:1px solid #c3c3c3; width:100px ; height:100px"> 画布id=map 1200*1200 颜色设定
-		<p>Your browser does not support the HTML5 canvas tag.</p>
-		</canvas> -->
-	  </div>
-	  
-
+	 <div class="canvas" id="canvas" >
+	 <!-- <canvas id="map" style="border:1px solid #c3c3c3;" width="2300"  height="2300"> 画布id=map 1200*1200 颜色设定
+		<p>Your browser does not support the HTML5 canvas tag.</p>-->
+		</canvas> 
+</div>
   </div>
   
 
@@ -566,8 +643,11 @@ text-align:center;
 			
   <div  class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
   <p >这是一条介绍/备注。</p>
-<input id=cw type="button" onclick="cwRotate()" data-icon="forward" value="顺时针旋转" ></input><!-- 顺时针旋转按钮id=cw -->
-<input id=aw type="button" onclick="awRotate()" data-icon="back" value="逆时针旋转" ></input><!-- 逆时针旋转按钮id=aw -->
+<input id="cw" type="button" onclick="cwRotate()" data-icon="forward" value="顺时针旋转" ></input><!-- 顺时针旋转按钮id=cw -->
+<input id="aw" type="button" onclick="awRotate()" data-icon="back" value="逆时针旋转" ></input><!-- 逆时针旋转按钮id=aw -->
+<input id="in" type="button" onclick="zoomin(zoomrate)" data-icon="plus" value="放大"></input>
+<input id="out" type="button" onclick="zoomout(zoomrate)" data-icon="minus" value="缩小"></input>
+
   </div>
 </div>
   
