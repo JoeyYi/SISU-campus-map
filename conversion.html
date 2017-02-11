@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script type="text/javaScript" charset="UTF-8" src="js/Arrays.js" ></script>
+<script type="text/javascript" charset="UTF-8" src="js/Canvas.js" ></script>
+
+<script src="js/jquery-1.11.1.min.js"></script>
+<script>
+
+$(document).ready(function(){
+for(var i=0;i<Array.length;i++){
+var t1=Array[i][3];
+var t2=Array[i][4];
+var index=i;////////
+
+if(Array[i][2]==1||Array[i][2]==5){
+
+var add = document.createElement("p");
+	//add.innerHTML='<li><a href="#p2" id="'+index+'">'+Array[i][0]+t1+'-松江校区'+Array[i][0]+'教楼'+Array[i][1]+'层'+t1+'/'+t2+'</a></li>';
+//	$("#floor").appendChild(add); 
+//	$("#p").innerHTML+=t1;
+//	$("#p").before('<*li><*a href="#p2" id="'+index+'">'+Array[i][0]+t1+'-松江校区'+Array[i][0]+'教楼'+Array[i][1]+'层'+t1+'/'+t2+'<*/a><*/li>');
+//	$("#p").before("<br>");
+	if(t2!="0"){
+//	var add = document.createElement("p");
+//	add.innerHTML='<li><a href="#p2" id="'+index+'">'+Array[i][0]+t1+'-松江校区'+Array[i][0]+'教楼'+Array[i][1]+'层'+t1+'/'+t2+'</a></li>'
+//	document.getElementById("floor").appendChild(add); 
+	$("#p").before('<*li><*a href="#p2" id="'+index+'">'+Array[i][0]+t1+'-松江校区'+Array[i][0]+'教楼'+Array[i][1]+'层'+t1+'/'+t2+'<*/a><*/li>');
+	$("#p").before("<br>");
+	$("#p").before('<*li><*a href="#p2" id="'+index+'">'+Array[i][0]+t2+'-松江校区'+Array[i][0]+'教楼'+Array[i][1]+'层'+t1+'/'+t2+'<*/a><*/li>');
+	$("#p").before("<br>");
+
+	}else{
+	$("#p").before('<*li><*a href="#p2" id="'+index+'">'+Array[i][0]+t1+'-松江校区'+Array[i][0]+'教楼'+Array[i][1]+'层'+t1+'<*/a><*/li>');
+
+	$("#p").before("<br>");
+	
+	}
+	
+	
+
+}
+	}
+	
+	});
+	
+</script>
+</head>
+
+
+<body>
+
+	  <div id="floor" ></div>
+<p id="p"></p>
+</body>
+
+</html>
