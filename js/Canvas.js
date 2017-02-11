@@ -1,4 +1,4 @@
-
+﻿
 var printStart,printEnd;//全局变量 打印开始和结束定位
 
 function pre(){//打印准备
