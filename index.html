@@ -14,6 +14,19 @@
 <!-- <link rel="stylesheet" href="css/default.css"> -->
 <script type="text/javascript">
 
+sc=0.2;cs=5;
+function scaleP(){
+sc*=1.5;
+cs=1/sc;
+pre();
+}
+
+function scaleM(){
+sc/=1.5;
+cs=1/sc;
+pre();
+}
+
 var zoomrate=0;
 function zoomin(rate){
 	switch(rate){
@@ -26,6 +39,7 @@ function zoomin(rate){
 			$("canvas").css("width","120%");
 			$("canvas").css("height","120%");
 			zoomrate+=1;
+			sc=2;
 			break;
 		case 1:
 			break;
@@ -55,6 +69,17 @@ function zoomout(rate){
 	}
 
 }
+
+
+
+	function hightlight(id){
+	Array[id][2]=5;
+	document.getElementById("bui").value=Array[id][0];
+	document.getElementById("flo").value=Array[id][1];
+	pre();
+	}
+
+
 
 $(document).ready(function(){
 
@@ -94,21 +119,21 @@ $(document).ready(function(){
 	$("#content").height(content);
 	console.log(screen,header,footer,content);
 
-/*
-var buildingMap = document.createElement("canvas"); 
-buildingMap.height= 406;
-buildingMap.width=$("#content").width();
-buildingMap.style="border:1px solid #c3c3c3;";
-buildingMap.id="map";
-document.getElementById("canvas").appendChild(buildingMap); 
-$( "#header" ).trigger( "updatelayout" );*/
-
-//$("#map").height(content-6);
-//$("#map").width($("#content").width());	
-	
 	}
 	
 
+	
+
+	
+	
+	
+	
+	$("[href='#p2']").click(function(){
+	hightlight($(this).attr("id"));
+	location.href = "#p2";
+	});
+	
+	
 	
 	
 /*<!-- var n =document.createElement("div");
@@ -128,6 +153,9 @@ document.getElementById("header").appendChild(n); */
 
 });
 
+
+
+
 </script>
 <style type="text/css">
 
@@ -143,6 +171,7 @@ text-align:center;
 #canvas{
 width: 95%;
 height: 95%;
+bottom:0;
 border-style:dotted;
 margin:auto;
 overflow: auto;
@@ -156,7 +185,12 @@ margin:auto;
 
 }
 #content{
-height:400px;
+height:430px;
+}
+
+.input{
+font-size:5px;
+
 }
 
 </style>
@@ -497,7 +531,7 @@ height:400px;
   <div data-role="header" class="header" id="header" data-position="fixed" >
 
 
-	<div data-role="controlgroup" data-type="horizontal" style="text-align:center"><!---->
+	<div data-role="controlgroup" data-type="horizontal" style="text-align:center">
 	
 	<select id="campus" >
 		<option value="0">--请选择校区--</option>  
@@ -521,7 +555,8 @@ height:400px;
 	</select>  
 	</div>
 	
-	  <div id="allnav" >	
+
+	  	  <div id="allnav" >	
   <div data-role="navbar" id="nav1" style="display:none">
     <ul >
       <li><a href="#anylink" >1楼</a></li>
@@ -623,6 +658,8 @@ height:400px;
   </div>
 </div>
   
+	
+  
 	  <div class="hidden" style="display:none">
 		<input type="text" id="bui" ></input>
 		<input type="text"id="flo" ></input>  
@@ -631,10 +668,14 @@ height:400px;
 
 
   <div data-role="content" id="content">
-	 <div class="canvas" id="canvas" >
-	 <!-- <canvas id="map" style="border:1px solid #c3c3c3;" width="2300"  height="2300"> 画布id=map 1200*1200 颜色设定
-		<p>Your browser does not support the HTML5 canvas tag.</p>-->
+  
+
+  	 <div class="canvas" id="canvas" >
+	 <!-- <canvas id="map" style="border:1px solid #c3c3c3;" width="2300"  height="2300"> 画布id=map 1200*1200 颜色设定-->
+		<p>Your browser does not support the HTML5 canvas tag.</p>
 		</canvas> 
+  
+
 </div>
   </div>
   
@@ -642,12 +683,13 @@ height:400px;
 			
 			
   <div  class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-  <p >这是一条介绍/备注。</p>
-<input id="cw" type="button" onclick="cwRotate()" data-icon="forward" value="顺时针旋转" ></input><!-- 顺时针旋转按钮id=cw -->
-<input id="aw" type="button" onclick="awRotate()" data-icon="back" value="逆时针旋转" ></input><!-- 逆时针旋转按钮id=aw -->
-<input id="in" type="button" onclick="zoomin(zoomrate)" data-icon="plus" value="放大"></input>
-<input id="out" type="button" onclick="zoomout(zoomrate)" data-icon="minus" value="缩小"></input>
 
+  
+  <p >这是一条介绍/备注。</p>
+<input id="cw" type="button" onclick="cwRotate()" data-icon="forward" value="顺时针" ></input><!-- 顺时针旋转按钮id=cw -->
+<input id="aw" type="button" onclick="awRotate()" data-icon="back" value="逆时针" ></input><!-- 逆时针旋转按钮id=aw -->
+<input id="in" type="button" onclick="scaleP()" data-icon="plus" value="放大"></input>
+<input id="out" type="button" onclick="scaleM()" data-icon="minus" value="缩小"></input>
   </div>
 </div>
   
