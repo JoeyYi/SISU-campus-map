@@ -2,17 +2,9 @@
 var printStart,printEnd;//全局变量 打印开始和结束定位
 
 function pre(){//打印准备
-	var c=document.getElementById("map");
-	var ctx=c.getContext("2d");//获取对应的CanvasRenderingContext2D对象(画笔)
-	
-	ctx.fillStyle="white";
-	ctx.fillRect(0,0,2000,2000);//画布填充白色
 
-	printMap(Array,document.getElementById("bui").value,document.getElementById("flo").value);
-}
-
-
-function printMap(Array,buildingIndex,floorIndex){//绘制地图(数组)（楼，层）
+var buildingIndex=document.getElementById("bui").value;
+var floorIndex=document.getElementById("flo").value;
 
 	console.log("获得的buildingindex和floorindex为 ",buildingIndex,floorIndex);
 	for(var i=0;i<Array.length;i++){ //定位打印开始和结束
@@ -31,6 +23,35 @@ function printMap(Array,buildingIndex,floorIndex){//绘制地图(数组)（楼�
 
 console.log("printStart,printEnd "+printStart,printEnd);
 
+var cvsheight=0,cvswidth=0;
+for (var i= printStart; i<=printEnd;i++){
+	cvsheight=Math.max(cvsheight,Array[i][6]+Array[i][8]);
+	cvswidth=Math.max(cvswidth,Array[i][5]+Array[i][7]);
+}
+
+var buildingMap = document.createElement("canvas"); 
+buildingMap.height= cvsheight;
+buildingMap.width= cvswidth;
+buildingMap.style="border:1px solid #c3c3c3;";
+buildingMap.id="map";
+document.getElementById("canvas").appendChild(buildingMap); 
+console.log("canvas大小",cvsheight,cvswidth);
+
+
+
+printMap(Array,printStart,printEnd);
+}
+
+
+function printMap(Array,printStart,printEnd){//绘制地图(数组)（楼，层）
+
+
+
+	var c=document.getElementById("map");
+	var ctx=c.getContext("2d");//获取对应的CanvasRenderingContext2D对象(画笔)
+	
+	ctx.fillStyle="white";
+	ctx.fillRect(0,0,3000,3000);//画布填充白色
 
 for(var i=printStart;i<=printEnd;i++){
 print(Array[i][2],Array[i][5],Array[i][6],Array[i][7],Array[i][8],Array[i][3],Array[i][4]);
