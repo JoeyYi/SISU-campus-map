@@ -14,59 +14,19 @@
 <!-- <link rel="stylesheet" href="css/default.css"> -->
 <script type="text/javascript">
 
-sc=0.2;cs=5;
+sc=0.5;cs=2;
 function scaleP(){
 sc*=1.5;
+console.log(sc);
 cs=1/sc;
 pre();
+
 }
 
 function scaleM(){
 sc/=1.5;
 cs=1/sc;
 pre();
-}
-
-var zoomrate=0;
-function zoomin(rate){
-	switch(rate){
-		case -1:
-			$("canvas").css("width","100%");
-			$("canvas").css("height","100%");
-			zoomrate+=1;
-			break;
-		case 0:
-			$("canvas").css("width","120%");
-			$("canvas").css("height","120%");
-			zoomrate+=1;
-			sc=2;
-			break;
-		case 1:
-			break;
-		default:
-			alert("怎么会这样???");	
-	}
-
-}
-
-
-function zoomout(rate){
-	switch(rate){
-		case -1:
-			break;
-		case 0:
-			$("canvas").css("width","80%");
-			$("canvas").css("height","80%");
-			zoomrate-=1;
-			break;
-		case 1:
-			$("canvas").css("width","100%");
-			$("canvas").css("height","100%");
-			zoomrate-=1;
-			break;
-		default:
-			alert("怎么会这样???");	
-	}
 
 }
 
@@ -80,6 +40,8 @@ function zoomout(rate){
 	}
 
 
+	
+	
 
 $(document).ready(function(){
 
@@ -87,8 +49,7 @@ $(document).ready(function(){
     $("#building").bind("change",function(){ 
     if($(this).val()==0){
       return; 
-    } 
-    else{
+    } else{
 		var a="#nav"+$(this).val(); 
 		for(var i=1;i<12;i++){
 			//$("#nav"+i).css("display","none");
@@ -97,34 +58,39 @@ $(document).ready(function(){
 		//$(a).css("display","inline");
 		$(a).slideToggle("fast");
 		$("#bui").val($(this).val());
-
+	
 	} 
 	}); 
 	
 	$("li").click(function(){
 	$("#flo").val($(this).index()+1);
-	
+	changeHeight();
 	$("#canvas").hide();pre();
 	$("#canvas").fadeIn();
+	
 	});
 	
+	
+	
+
+	
+	
+
 	function changeHeight(){
-	var screen = $(window).height();
-//  header = $(".ui-header").hasClass("ui-header-fixed") ? $(".ui-header").outerHeight() - 1 : $(".ui-header").outerHeight(),
-//  footer = $(".ui-footer").hasClass("ui-footer-fixed") ? $(".ui-footer").outerHeight() - 1 : $(".ui-footer").outerHeight(),
-    var header =$(".header").outerHeight() - 1;
-	var footer =$(".footer").outerHeight() - 1;
-//	var contentCurrent = $(".ui-content").outerHeight() - $(".ui-content").height();
-    var content = screen - header - footer ;//- contentCurrent;
-	$("#content").height(content);
-	console.log(screen,header,footer,content);
+    var screen = $.mobile.getScreenHeight();
+    var header = $("#p2").children(".ui-header").outerHeight()+5;
+    var footer = $("#p2").children(".ui-footer").outerHeight()+5;
+	var ctrl = $("#a").outerHeight()+5;
+	var nav = $("#nav1").outerHeight()+5;
+    var contentCurrent = $("#p2").children(".ui-content").outerHeight() - $("#p2").children(".ui-content").height();
+    content = screen - header - footer - contentCurrent - ctrl - nav ;
+    $("#p2").children(".ui-content").height(content);
+
+	console.log(ctrl,nav,screen,header,footer,content);
 
 	}
 	
 
-	
-
-	
 	
 	
 	
@@ -136,19 +102,6 @@ $(document).ready(function(){
 	
 	
 	
-/*<!-- var n =document.createElement("div");
-n.width=100;
-n.height=100;
-n.style="background-color:red";
-alert("aaa");
-document.getElementById("header").appendChild(n); */
-
-//$(".map").width($.mobile.getScreenWidth());
-
-
-
-
-
 
 
 });
@@ -171,8 +124,6 @@ text-align:center;
 #canvas{
 width: 95%;
 height: 95%;
-bottom:0;
-border-style:dotted;
 margin:auto;
 overflow: auto;
 text-align:center;
@@ -182,6 +133,7 @@ text-align:center;
 
 canvas{
 margin:auto;
+zoom:0.5;
 
 }
 #content{
@@ -191,6 +143,13 @@ height:430px;
 .input{
 font-size:5px;
 
+}
+
+
+.footer{
+
+bottom:0px;
+text-align:center;
 }
 
 </style>
@@ -522,25 +481,25 @@ font-size:5px;
 <li><a href="#p2" id="267">7107-松江校区7教楼1层107</a></li>
 
 				</ul>
-		<a href="#p2" data-transition="slideup" class="ui-btn ui-corner-all">Explore Campus</a>
+		<a href="#p2" data-theme="a" data-transition="slideup" class="ui-btn ui-corner-all">Explore Campus</a>
 	</div>			
 </div>
 
 
 <div data-role="page" id="p2" data-ajax="false">
   <div data-role="header" class="header" id="header" data-position="fixed" >
-
-
-	<div data-role="controlgroup" data-type="horizontal" style="text-align:center">
+<h1>This Location</h1>
+  </div>
+	<div data-role="controlgroup" id= "a" data-type="horizontal"  style="text-align:center">
 	
 	<select id="campus" >
-		<option value="0">--请选择校区--</option>  
+		<option value="0">请选择校区</option>  
 		<option value="1">松江校区</option> 
 		<option value="2">虹口校区</option>  
 	</select>
 	
 	<select  id="building"  >  
-		<option value="0">--请选择教学楼--</option>  
+		<option value="0">请选择教学楼</option>  
 		<option value="1">一教楼</option> 
 		<option value="2">二教楼</option>  
 		<option value="3">三教楼</option>  
@@ -553,10 +512,13 @@ font-size:5px;
 		<option value="10">师生活动中心</option>  
 		<option value="11">教育会堂</option>  
 	</select>  
+	
+
+	
 	</div>
 	
 
-	  	  <div id="allnav" >	
+	  	  <div id="allnav" id="b" >	
   <div data-role="navbar" id="nav1" style="display:none">
     <ul >
       <li><a href="#anylink" >1楼</a></li>
@@ -664,7 +626,7 @@ font-size:5px;
 		<input type="text" id="bui" ></input>
 		<input type="text"id="flo" ></input>  
 	  </div>
-  </div>
+
 
 
   <div data-role="content" id="content">
@@ -682,16 +644,18 @@ font-size:5px;
 
 			
 			
-  <div  class="footer" data-role="footer" data-position="fixed" data-tap-toggle="false">
-
+  <div  class="footer " data-role="footer" data-position="fixed"  data-tap-toggle="false">
   
   <p >这是一条介绍/备注。</p>
-<input id="cw" type="button" onclick="cwRotate()" data-icon="forward" value="顺时针" ></input><!-- 顺时针旋转按钮id=cw -->
-<input id="aw" type="button" onclick="awRotate()" data-icon="back" value="逆时针" ></input><!-- 逆时针旋转按钮id=aw -->
-<input id="in" type="button" onclick="scaleP()" data-icon="plus" value="放大"></input>
-<input id="out" type="button" onclick="scaleM()" data-icon="minus" value="缩小"></input>
+<input id="cw" type="button"   onclick="cwRotate()" data-icon="forward" value="顺时针旋转" ></input><!-- 顺时针旋转按钮id=cw -->
+<input id="aw" type="button"  onclick="awRotate()" data-icon="back" value="逆时针旋转" ></input><!-- 逆时针旋转按钮id=aw -->
+<input id="in" type="button" data-iconpos="notext" onclick="scaleP()" data-icon="plus" value="+"></input>
+<input id="out" type="button" data-iconpos="notext" onclick="scaleM()" data-icon="minus" value="缩小"></input>
+<input id="turn" type="button" onclick="orientation()" data-icon="refresh" value="跟随手机指向"></input>
   </div>
 </div>
+  
+  
   
 </body>
 
