@@ -34,17 +34,47 @@ for (var i= printStart; i<=printEnd;i++){
 }
 
 var buildingMap = document.createElement("canvas"); 
-buildingMap.height= cvsheight;
-buildingMap.width= cvswidth;
-buildingMap.style="border:1px solid #c3c3c3;";
+buildingMap.height= cvsheight*sc;
+buildingMap.width= cvswidth*sc;
+buildingMap.style="border:1px solid #c3c3c3 margin-top:80px;";
+console.log("margintop2",content-cvsheight*sc*0.5);
+buildingMap.style.marginTop=(content-cvsheight*sc*0.5)/2+"px";
 buildingMap.id="map";
 document.getElementById("canvas").appendChild(buildingMap); 
 console.log("canvas大小",cvsheight,cvswidth);
-
-
+if ((content-cvsheight*sc*0.5)/2>=20){
+//???????
+}
 
 printMap(Array,printStart,printEnd);
 }
+
+
+
+  	function orientation(){
+	if (document.getElementById("turn").value=="跟随手机指向"){
+		document.getElementById("turn").value="关闭跟随手机";
+		if(window.DeviceOrientationEvent){
+			window.addEventListener("deviceorientation",DeviceOrientationHandler,false);
+			}else{
+			alert("您的浏览器不支持DeviceOrientation");
+			}
+
+		}else{
+			pre();
+			document.getElementById("turn").value="跟随手机指向";
+		}
+
+
+	}
+
+
+	function DeviceOrientationHandler(event){
+		var alpha = event.alpha;
+		var deg="rotate("+alpha+"deg)";
+		console.log("deg",deg);
+		document.getElementById("canvas").style.webkitTransform=deg;}
+
 
 
 function printMap(Array,printStart,printEnd){//绘制地图(数组)（楼，层）
